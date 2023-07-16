@@ -1,0 +1,227 @@
+﻿<Window x:Class="Student_Management_System.Views.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Student_Management_System.ViewModels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="AdminWindow" Height="700" Width="1100"
+        FontSize="16"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        FontWeight="SemiBold"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" 
+                                         PrimaryColor="Teal" 
+                                         SecondaryColor="Lime"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <local:AdminWindowViewModel/>
+    </Window.DataContext>
+
+    <Border Background="#ffffff" CornerRadius="40">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="ADMIN PANNEL" Margin="0 30 0 0 " FontSize="24" HorizontalAlignment="Center" FontWeight="Bold"/>
+
+            <Button  VerticalAlignment="Top"
+                         Width="50"
+                         Height="50"
+                         HorizontalAlignment="Right"
+                         Margin="0 13 14 0"
+                         Opacity="0.3"
+                         Command="{Binding CloseCommand}">
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border>
+                            <materialDesign:PackIcon Kind="Shutdown"
+                                                         Width="40"
+                                                         Height="40"
+                                                         VerticalAlignment="Center"
+                                                         HorizontalAlignment="Center"
+                                                         Foreground="#212529"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Grid Grid.Row="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250"/>
+                    <RowDefinition Height="330"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Users Lists" Margin="20 10 10 10" FontSize="20" Grid.Row="0"/>
+
+                <ListView ItemsSource="{Binding Listofuser}" Grid.Row="0" Margin="20 30 10 10">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Password" DisplayMemberBinding="{Binding Password}"/>
+                                <GridViewColumn Header="Action">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Margin="4">
+                                                <Button Name="BtnUpdate" Content="Update" Width="Auto" Height="25" Margin="10,0,0,0" Command="{Binding DataContext.UpdateCommand,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                                                CommandParameter="{Binding}"/>
+                                                <Button Name="BtnDelete" Content="Delete" Width="Auto" Height="25" Margin="10,0,0,0" Command="{Binding DataContext.DeleteCommand,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                                                CommandParameter="{Binding}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Grid Grid.Row="1">
+
+                    <Border Margin="20 20 10 10" BorderBrush="#212529" BorderThickness="1">
+
+                        <StackPanel Margin="5" Orientation="Vertical">
+
+                            <Label Content="ADD NEW USER" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                            <StackPanel HorizontalAlignment="Center" Margin="0 20 0 0">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         Text="{Binding UserName}"
+                                         materialDesign:HintAssist.Hint="User Name"
+                                         materialDesign:HintAssist.FloatingOffset="0,-18"
+                                         BorderBrush="#c5c8cc"
+                                         Width="100"
+                                         BorderThickness="0 0 0 1.5"/>
+
+                                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         Text="{Binding Password}"
+                                         materialDesign:HintAssist.Hint="Password"
+                                         materialDesign:HintAssist.FloatingOffset="0,-18"
+                                         BorderBrush="#c5c8cc"
+                                         Margin="50 0 0 0"
+                                         Width="Auto"
+                                         BorderThickness="0 0 0 1.5"/>
+
+                                    <Button Content="SAVE" Style="{StaticResource normalButton}" Width="100" Margin="50 0 0 0" Command="{Binding AddUserCommand}"/>
+
+                                </StackPanel>
+                            </StackPanel>
+
+                            <Label Content="EDIT USER" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 40 0 0"/>
+
+                            <StackPanel HorizontalAlignment="Center" Margin="0 20 0 0">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         Text="{Binding SelectedUser.Name}"
+                                         materialDesign:HintAssist.Hint="User Name"
+                                         materialDesign:HintAssist.FloatingOffset="0,-18"
+                                         BorderBrush="#c5c8cc"
+                                         Width="100"
+                                         BorderThickness="0 0 0 1.5"/>
+
+                                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         Text="{Binding SelectedUser.Password}"
+                                         materialDesign:HintAssist.Hint="Password"
+                                         materialDesign:HintAssist.FloatingOffset="0,-18"
+                                         BorderBrush="#c5c8cc"
+                                         Margin="50 0 0 0"
+                                         Width="Auto"
+                                         BorderThickness="0 0 0 1.5"/>
+
+                                    <Button Content="UPDATE" Style="{StaticResource normalButton}" Width="100" Margin="50 0 0 0" Command="{Binding UpdateUserCommand}"/>
+
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+
+                <TextBlock Text="Module Lists" Margin="10" FontSize="20" Grid.Row="0" Grid.Column="1"/>
+
+                <ListView ItemsSource="{Binding Listofmodule}" Grid.Row="0" Grid.Column="1" Margin="10 30 20 0">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Code" DisplayMemberBinding="{Binding Code}"/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Credit" DisplayMemberBinding="{Binding Credit}"/>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Border Margin="10 20 20 10" BorderBrush="#212529" BorderThickness="1" Grid.Column="1" Grid.Row="1">
+
+                    <StackPanel Orientation="Vertical" Margin="10">
+
+                        <Label Content="ADD NEW MODULE" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding Code}"
+                             materialDesign:HintAssist.Hint="Module Code"
+                             materialDesign:HintAssist.FloatingOffset="0,-18"
+                             BorderBrush="#c5c8cc"
+                             Width="100"
+                             Margin="10 10 0 0"
+                             HorizontalAlignment="Left"
+                             BorderThickness="0 0 0 1.5"/>
+
+                        <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding Name}"
+                             materialDesign:HintAssist.Hint="Module Name"
+                             materialDesign:HintAssist.FloatingOffset="0,-18"
+                             BorderBrush="#c5c8cc"
+                             Margin="10 10 0 0"
+                             Width="Auto"
+                             HorizontalAlignment="Left"
+                             BorderThickness="0 0 0 1.5"/>
+
+                        <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             Text="{Binding Credit}"
+                             materialDesign:HintAssist.Hint="Enter Credit"
+                             materialDesign:HintAssist.FloatingOffset="0,-18"
+                             BorderBrush="#c5c8cc"
+                             HorizontalAlignment="Left"
+                             Margin="10 10 0 0"
+                             Width="100"
+                             BorderThickness="0 0 0 1.5"/>
+
+                        <Button Content="ADD MODULE" Style="{StaticResource normalButton}" Width="150" Margin="10 20 0 0" Command="{Binding AddModuleCommand}" HorizontalAlignment="Left"/>
+
+                    </StackPanel>
+
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

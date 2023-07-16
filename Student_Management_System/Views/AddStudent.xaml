@@ -1,0 +1,90 @@
+﻿<Window x:Class="Student_Management_System.Views.AddStudent"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Student_Management_System.ViewModels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Height="450" Width="700"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Century Gothic"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.DataContext>
+        <local:AddStudentViewModele/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#5bc9b2" Padding="20" CornerRadius="25 0 0 25">
+            <StackPanel>
+                <materialDesign:PackIcon Kind="AccountStudent"
+                                                 Width="70"
+                                                 Height="70"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"
+                                         Margin="10 100 10 10"/>
+                <TextBlock Foreground="Black" FontWeight="SemiBold" HorizontalAlignment="Center" Text="Let's get started!" Margin="0 0 0 10" FontSize="14"/>
+                <TextBlock Foreground="Black" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="Please fill out the information to create a new student record." Width="164" FontSize="14"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Background="#ecf4f0" CornerRadius="0 25 25 0">
+            <Grid Margin="0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="0*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="1" Grid.Column="0" Text="Reg. Number" Margin="40,5,28,5" FontSize="16"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RegNo, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,0,5" Background="#FFD3D3D3" BorderBrush="Transparent"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="First Name" Margin="40,5,28,5" FontSize="16"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,0,5" Background="#FFD3D3D3" BorderBrush="Transparent"/>
+
+                <TextBlock  Grid.Row="3" Grid.Column="0" Text="Last Name" Margin="40,5,28,5" FontSize="16"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,0,5" Background="#FFD3D3D3" BorderBrush="Transparent"/>
+
+                <TextBlock  Grid.Row="4" Grid.Column="0" Text="Reg. Number" Margin="40,5,28,5" FontSize="16"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TelephoneNo, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,0,5" Background="#FFD3D3D3" BorderBrush="Transparent"/>
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Address" Margin="40,5,28,5" FontSize="16"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,0,5" HorizontalAlignment="Left" Width="245" Background="#FFD3D3D3" BorderBrush="Transparent" />
+
+                <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+                    <Button Style="{StaticResource addButton}" Background="#02be68" Foreground="#ffffff" Command="{Binding SaveCommand}" Width="100" Margin="10">
+                        <Grid>
+                            <TextBlock Text="Save" Margin="0,0,0,2" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Style="{StaticResource addButton}" Background="#02be68" Foreground="#ffffff" Command="{Binding CloseCommand}" Width="100" Margin="10">
+                        <Grid>
+                            <TextBlock Text="Cancle" Margin="0,0,0,2" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
